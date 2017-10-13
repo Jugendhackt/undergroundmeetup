@@ -75,11 +75,7 @@ def findMeetPoint(data, positions):
 
             #Now iterate over all connections departing current_vertex except itself (remove -1 connections)
             for neighbor in [key for key in range(0, data.shape[0]) 
-                                 if key!=current_vertex[psn] and
-                                    data[:, 
-                                    current_vertex[psn]
-                                    ]
-                                    [key]!=-1]:
+                                 if key!=current_vertex[psn] and data[:, current_vertex[psn]][key]!=-1]:
                 alt = dist[psn][current_vertex[psn]] + data[current_vertex[psn], neighbor];
                 if (alt < dist[psn][neighbor]): #If new route is better, change it
                     dist[psn][neighbor] = alt;
@@ -87,7 +83,8 @@ def findMeetPoint(data, positions):
 
         from functools import reduce
         knownIntersection = reduce(np.intersect1d, knownPoints)
-        if (len(knownIntersection) > 0): return knownIntersection;
+        if (len(knownIntersection) == 1): return knownIntersection[0];
+        if (len(knownIntersection) > 1): return int(min(knownIntersection, key=lambda x: max(dist[:,int(x)])));
 
     return -1;
             #   A   B   C   D   E (FROM)
@@ -97,4 +94,4 @@ test_graph = [[ 0,  1, -1,  8, -1], #Fastest path [AE] is A-B-C-D-E [WANTED]
               [ 8, -1,  1,  0,  1],
               [-1, -1,  4,  1,  0]]
 
-print(findMeetPoint(test_graph, [0, 1, 0])) #Find fastest path for [AE] and print it
+print(findMeetPoint(test_graph, [0, 2, 0])) #Find fastest path for [AE] and print it
