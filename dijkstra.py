@@ -16,7 +16,7 @@ UNDEFINED = None
 # P1/P2 are the indices of the stations in the matrix (From Column to Row)
 def findMeetPoint(data, P1, P2):
     data = np.array(data);
-    vertices = range(1, data.shape.x);
+    vertices = np.array(range(0, data.shape[0]));
     dist = {};
     prev = {};
 
@@ -26,15 +26,23 @@ def findMeetPoint(data, P1, P2):
 
     dist[P1] = 0;
 
-    while (vertices.length > 0): #while there are nodes left in the unknown set "Q"
+    while (len(vertices) > 0): #while there are nodes left in the unknown set "Q"
         current_vertex = min(vertices, key=lambda x: dist[vertex]) #closest neighbor
-        del vertices[current_vertex]; #remove the node from the unknown set "Q"
-
+        vertices = [] if len(vertices)==1 else vertices[vertices!=current_vertex]; #remove the node from the unknown set "Q"
+        print(current_vertex);
         #Now iterate over all connections departing current_vertex except itself (remove -1 connections)
-        for neighbor in [x for i,x in enumerate(data[:, current_vertex]) if i!=current_vertex and x!=-1]
-            alt = dist[current_vertex] + length(current_vertex, neighbor);
-            if (alt < dist[neighbor]) #If new route is better, change it
+        for neighbor in [key for key in range(0, data.shape[0]) if key!=current_vertex and data[:, current_vertex][key]!=-1]:
+            alt = dist[current_vertex] + data[current_vertex, neighbor];
+            if (alt < dist[neighbor]): #If new route is better, change it
                 dist[neighbor] = alt;
                 prev[neighbor] = current_vertex;
 
     return prev;
+            #   A   B   C   D   E (FROM)
+test_graph = [[ 0,  1, -1,  8, -1], #Fastest path [AE] is A-B-C-D-E [WANTED]
+              [ 1,  0,  2, -1, -1], #Shortest path [AE] is A-D-E
+              [-1,  2,  0,  1,  4],
+              [ 8, -1,  1,  0,  1],
+              [-1, -1,  4,  1,  0]]
+
+print(findMeetPoint(test_graph, 0, 4)) #Find fastest path for [AE] and print it
