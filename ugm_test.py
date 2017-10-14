@@ -1,11 +1,12 @@
 import numpy as np
 import csv
-from ugm_interface import findNamedMeetPoint, load_metro_data
+from ugm_interface import findNamedMeetPoint, findNamedMeetData,load_metro_data
 
 data = load_metro_data('data.generated.csv')
 
-locations = [ "A01", "A20" ]
+locations = [ "S08", "A16" ]
 
 print("Finding meeting point for:")
 print(locations)
 print("=> Meeting point: " + findNamedMeetPoint(data, locations))
+print(findNamedMeetData(data, locations))
