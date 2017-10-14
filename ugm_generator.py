@@ -46,13 +46,18 @@ header_line = ""
 for station in stations: 
     header_line += station + ";"
 
+# Remove last simicolon from header line
 header_line = header_line[:-1]
+
+# Generate staion_size x station_size filled with -1's
 matrix = np.ones(shape=(len(header_line), len(header_line))) * -1;
 
+# Replace all relations in matix
 for relation in relations:
     matrix[stations.index(relation.stationOne)][stations.index(relation.stationTwo)] = relation.stationTime;
     matrix[stations.index(relation.stationTwo)][stations.index(relation.stationOne)] = relation.stationTime;
 
+# Write the matrix in csv format
 output = open('data.generated.csv', "w+")
 output.writelines(header_line)
 output.write('\n')
