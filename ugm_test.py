@@ -7,7 +7,7 @@ data = np.loadtxt(open("data.csv", "rb"), delimiter=";", skiprows=1).transpose(1
 print(data[1][0])
 print(data.shape)
 print(len(header))
-locations = [14, 18]
+locations = [0, 18, 14]
 print("Finding meeting point for:")
 for station in locations:
     print(" - " + str(header[station]))
