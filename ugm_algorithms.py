@@ -84,7 +84,7 @@ def findMeetPoint(data, positions):
                     cur_dist = dist[psn][current_vertex];
                     neighbor_distance = data[current_vertex, neighbor];
                     if (neighbor_distance < 1): 
-                        raise Exception("Data corrupted!");
+                        raise Exception("Data corrupted at ("+str(current_vertex)+"|"+str(neighbor)+")!");
                     alt = cur_dist + neighbor_distance;
                     if (alt < dist[psn][neighbor]): #If new route is better, change it
                         dist[psn][neighbor] = alt;
