@@ -15,16 +15,50 @@ class StationRelation:
 stations = []
 relations = []
 
-file_lines = open('data.lines.csv')
+file_lines = open('tokyo-metro-data/lines.csv')
 for line in file_lines:
     prefix  = line.split(';')[0]
-    start   = line.split(';')[1]
-    end     = line.split(';')[2]
+    start   = int(line.split(';')[1])
+    end     = int(line.split(';')[2])
     times    = line.split(';')[3:]
     for i in range(start, end):
-        stations.append(str(prefix) + str(i))
-        if (i != offset) relations.append(str(prefix) + str(i-1),
-                                        str(prefix) + str(i+0),
-                                        int(times[i - start]))
-print(stations)
-print(relations)                                          
+        stations.append(prefix + ("0" if i < 10 else "") + str(i))
+        relations.append(StationRelation(prefix + ("0" if i < 10 else "") + str(i), 
+                                         prefix + ("0" if i < 10 else "") + str(i), 
+                                         0)) #0 for itself
+        if (i != start):
+            relations.append(StationRelation(
+                             prefix + ("0" if i-1 < 10 else "") + str(i-1),
+                             prefix + ("0" if i+0 < 10 else "") + str(i+0),
+                             int(times[i - start])))
+
+file_lines = open('tokyo-metro-data/transitions.csv')
+for line in file_lines:
+    prefix1  = line.split(';')[0]
+    prefix2  = line.split(';')[2]
+    number1  = line.split(';')[1]
+    number2  = line.split(';')[3]
+    time     = line.split(';')[4]
+    relations.append(StationRelation(str(prefix1) + str(number1),str(prefix2) + str(number2), int(time)))
+
+header_line = ""
+
+for station in stations: 
+    header_line += station + ";"
+
+header_line = header_line[:-1]
+matrix = np.ones(shape=(len(header_line), len(header_line))) * -1;
+
+for relation in relations:
+    matrix[stations.index(relation.stationOne)][stations.index(relation.stationTwo)] = relation.stationTime;
+    matrix[stations.index(relation.stationTwo)][stations.index(relation.stationOne)] = relation.stationTime;
+
+output = open('data.generated.csv', "w")
+output.writelines(header_line)
+output.write('\n')
+for column in range(0, len(header_line) - 1):
+    for row in range(0, len(header_line) - 1):
+        output.write(str(matrix[column][row]))
+        output.write(';' if row != len(header_line) else '')
+    output.write('\n')
+print("Done!")
