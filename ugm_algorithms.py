@@ -76,11 +76,15 @@ def findMeetPoint(data, positions):
                 knownPoints[psn] = np.append(knownPoints[psn], current_vertex); #add node to known set
 
                 #Now iterate over all connections departing current_vertex except itself (remove -1 connections)
+                departures = data[current_vertex, :]; #Column majour
                 neighbors = [key for key in range(0, data.shape[0]) 
-                                    if key!=current_vertex and data[:, current_vertex][key]!=-1]
+                                    if key!=current_vertex and departures[key]!=-1]
+                                    
                 for neighbor in neighbors:
                     cur_dist = dist[psn][current_vertex];
                     neighbor_distance = data[current_vertex, neighbor];
+                    if (neighbor_distance < 1): 
+                        raise Exception("Data corrupted!");
                     alt = cur_dist + neighbor_distance;
                     if (alt < dist[psn][neighbor]): #If new route is better, change it
                         dist[psn][neighbor] = alt;
