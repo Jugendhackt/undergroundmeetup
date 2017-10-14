@@ -40,6 +40,8 @@ for line in file_lines:
 
 file_lines = open('tokyo-metro-data/transitions.csv')
 for line in file_lines:
+    if (line[0] == "#"[0]): continue;
+    if (line.isspace()): continue;
     line = line.split(';')
     prefix1  = line[0]
     number1  = int(line[1])
