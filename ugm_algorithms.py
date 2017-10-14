@@ -91,26 +91,3 @@ def findMeetPoint(data, positions):
         if (len(knownIntersection) == 1): return knownIntersection[0];
         if (len(knownIntersection) > 1): return int(min(knownIntersection, key=lambda x: max(dist[:,int(x)])));
     return -1;
-            #   A   B   C   D   E (FROM)
-#test_graph = [[ 0,  1, -1,  8, -1], #Fastest path [AE] is A-B-C-D-E [WANTED]
-#              [ 1,  0,  2, -1, -1], #Shortest path [AE] is A-D-E
-#              [-1,  2,  0,  1,  4],
-#              [ 8, -1,  1,  0,  1],
-#              [-1, -1,  4,  1,  0]]
-#
-#print(findMeetPoint(test_graph, [0, 2, 0])) #Find fastest path for [AE] and print it
-
-def get_station_name(metro_data, station):
-    return metro_data["station_names"][station]
-
-def get_station_index(metro_data, station):
-    return metro_data["station_names"].index(station)
-
-def findNamedMeetPoint(metro_data, positions):
-    return get_station_name(metro_data, int(findMeetPoint(metro_data["metro_data"],
-        [x for x in map(lambda x: get_station_index(metro_data, x), positions)])))
-
-def load_metro_data(filename):
-    station_names = open('data.csv').readline().strip().split(";")
-    metro_data = np.loadtxt(open("data.csv", "rb"), delimiter=";", skiprows=1)
-    return { "station_names" : station_names, "metro_data" : metro_data }
