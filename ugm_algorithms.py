@@ -1,4 +1,5 @@
 import numpy as np
+import math
 from functools import reduce
 
 # All Matricies are expected to be comlumn majour
@@ -124,10 +125,30 @@ def findMeetPoint(data, positions):
 
         # Search for intersection
         knownIntersection = reduce(np.intersect1d, knownPoints)
+        meetpoint = None
         if (len(knownIntersection) == 1):
-            return knownIntersection[0]
+            meetpoint = int(knownIntersection[0])
+            return (meetpoint, [[int(y) for y in x] for x in traceback(prev, meetpoint)])
+            
         # Take intersection with smallest max distance over psn
         if (len(knownIntersection) > 1):
-            return int(min(knownIntersection,
+            meetpoint = int(min(knownIntersection,
                        key=lambda x: max(dist[:, int(x)])))
+            return (meetpoint, [[int(y) for y in x] for x in traceback(prev, meetpoint)])
     return -1
+
+def traceback(tracerays, target):
+    """
+    Used internally. Description to come.
+    """
+    traces = []
+    for trace in tracerays:
+        traces.append(traceback_recursive(trace, target))
+    return [reversed(trace) for trace in traces]
+    
+        
+def traceback_recursive(traceray, target):
+    if (math.isnan(traceray[int(target)])):
+        return [target]
+    else:
+        return [target] + traceback_recursive(traceray, traceray[int(target)])
