@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "build:dev": "browserify frontend.js -t babelify -d -o static/main.js",
+    "build:prod": "cross-env NODE_ENV=production browserify frontend.js -t babelify | uglifyjs -c -m > static/main.js"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babelify": "^7.3.0",
+    "uglify-js": "^3.0.27"
+  },
+  "dependencies": {
+    "browserify": "^14.4.0"
+  }
+}
