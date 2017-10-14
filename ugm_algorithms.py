@@ -144,7 +144,7 @@ def traceback(tracerays, target):
     traces = []
     for trace in tracerays:
         traces.append(traceback_recursive(trace, target))
-    return traces
+    return [reversed(trace) for trace in traces]
     
         
 def traceback_recursive(traceray, target):
