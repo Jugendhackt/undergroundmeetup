@@ -5,7 +5,7 @@ import numpy
 app = Flask(__name__)
 api_prefix = "/api/v1"
 
-metro_data = load_metro_data('data.csv')
+metro_data = load_metro_data('data.generated.csv')
 
 
 @app.route("/")
