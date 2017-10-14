@@ -16,9 +16,13 @@ def index():
 @app.route(api_prefix + "/meetup", methods=['POST'])
 def meetup():
     data = request.get_json()
-    meetup = findNamedMeetPoint(metro_data, data)
-    resp = make_response(json.jsonify(meetup=meetup))
-    resp.mimetype = 'application/json'
+    try:
+        meetup = findNamedMeetPoint(metro_data, data)
+        resp = make_response(json.jsonify(meetup=meetup))
+        resp.mimetype = 'application/json'
+    except ValueError:
+        resp = make_response(json.jsonify(error="Invalid Station Name"), 400)
+        resp.mimetype = 'application/json'
     return resp
 
 if __name__ == '__main__':
