@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, request, json, make_response
-from ugm_algorithms import findNamedMeetPoint, load_metro_data
+from ugm_interface import findNamedMeetPoint, load_metro_data
 import numpy
 
 app = Flask(__name__)
@@ -20,3 +20,5 @@ def meetup():
     resp = make_response(json.jsonify(meetup=meetup))
     resp.mimetype = 'application/json'
     return resp
+
+app.run();
