@@ -36,7 +36,7 @@ function calculate(stations, callback) {
   };
 
   fetch(new Request('/api/v1/meetup', myInit)).then(res => {
-    if(res.ok) {
+    if(res.status == 400 || res.status == 200) {
       return res.blob();
     } else {
       alert("Error in communication with the web server");
@@ -64,14 +64,18 @@ function showMeeting() {
 
   if(stations.length >= 2) {
     calculate(stations, result => {
-      var form = document.getElementById("form");
-      var resultDiv = document.getElementById('result');
-      if(resultDiv === null) {
-        resultDiv = document.createElement('div');
-        resultDiv.id = "result";
-        form.appendChild(resultDiv);
+      if(result.error !== undefined) {
+        alert("Error: " + result.error);
+      } else {
+        var form = document.getElementById("form");
+        var resultDiv = document.getElementById('result');
+        if(resultDiv === null) {
+          resultDiv = document.createElement('div');
+          resultDiv.id = "result";
+          form.appendChild(resultDiv);
+        }
+        resultDiv.innerHTML = "Your Meeting Point is <strong>" + result.meetup + "</strong>";
       }
-      resultDiv.innerHTML = "Your Meeting Point is <strong>" + result.meetup + "</strong>";
     });
   }
 }
