@@ -20,6 +20,7 @@ Then run
 ```shell
 git clone https://bitbucket.org/undergroundmeetup/ugm_main.git
 cd ugm_main
+git submodule update --init
 yarn install
 yarn run build:prod
 export FLASK_APP=ugm_web.py
