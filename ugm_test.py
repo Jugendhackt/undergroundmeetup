@@ -2,8 +2,10 @@ import numpy as np
 import csv
 from ugm_algorithms import findMeetPoint
 
-header = open('data.csv').readline().split(";")
-data = np.loadtxt(open("data.csv", "rb"), delimiter=";", skiprows=1).transpose(1, 0)
+data_file = 'data.generated.csv'
+
+header = open(data_file).readline().split(";")
+data = np.loadtxt(open(data_file, "rb"), delimiter=";", skiprows=1).transpose(1, 0)
 print(data[1][0])
 print(data.shape)
 print(len(header))
