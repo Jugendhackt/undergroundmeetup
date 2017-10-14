@@ -1,0 +1,12 @@
+[Unit]
+Description=ugm_web
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python /home/ugm/ugm/ugm_web.py
+User=ugm
+Group=users
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
