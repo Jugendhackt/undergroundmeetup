@@ -53,7 +53,7 @@ for relation in relations:
     matrix[stations.index(relation.stationOne)][stations.index(relation.stationTwo)] = relation.stationTime;
     matrix[stations.index(relation.stationTwo)][stations.index(relation.stationOne)] = relation.stationTime;
 
-output = open('data.generated.csv', "w")
+output = open('data.generated.csv', "w+")
 output.writelines(header_line)
 output.write('\n')
 for column in range(0, len(header_line) - 1):
