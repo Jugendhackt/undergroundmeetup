@@ -19,7 +19,7 @@ def findNamedMeetPoint(metro_data, positions):
 
 
 def load_metro_data(filename):
-    station_names = open('data.csv').readline().strip().split(";")
-    metro_data = np.loadtxt(open("data.csv", "r"),
+    station_names = open(filename).readline().strip().split(";")
+    metro_data = np.loadtxt(open(filename, "r"),
                             delimiter=";", skiprows=1).transpose(1, 0)
     return {"station_names": station_names, "metro_data": metro_data}
