@@ -1,6 +1,11 @@
 from flask import Flask, render_template, url_for, request, json, make_response
+from ugm_algorithms import findNamedMeetPoint, load_metro_data
+import numpy
+
 app = Flask(__name__)
 api_prefix = "/api/v1"
+
+metro_data = load_metro_data('data.csv')
 
 @app.route("/")
 def index():
@@ -11,6 +16,7 @@ def index():
 @app.route(api_prefix + "/meetup", methods=['POST'])
 def meetup():
     data = request.get_json()
-    resp = make_response(json.jsonify(meetup="G04"))
+    meetup = findNamedMeetPoint(metro_data, data)
+    resp = make_response(json.jsonify(meetup=meetup))
     resp.mimetype = 'application/json'
     return resp
