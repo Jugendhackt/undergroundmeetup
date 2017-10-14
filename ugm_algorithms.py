@@ -99,3 +99,18 @@ def findMeetPoint(data, positions):
 #              [-1, -1,  4,  1,  0]]
 #
 #print(findMeetPoint(test_graph, [0, 2, 0])) #Find fastest path for [AE] and print it
+
+def get_station_name(metro_data, station):
+    return metro_data["station_names"][station]
+
+def get_station_index(metro_data, station):
+    return metro_data["station_names"].index(station)
+
+def findNamedMeetPoint(metro_data, positions):
+    return get_station_name(metro_data, int(findMeetPoint(metro_data["metro_data"],
+        [x for x in map(lambda x: get_station_index(metro_data, x), positions)])))
+
+def load_metro_data(filename):
+    station_names = open('data.csv').readline().strip().split(";")
+    metro_data = np.loadtxt(open("data.csv", "rb"), delimiter=";", skiprows=1)
+    return { "station_names" : station_names, "metro_data" : metro_data }
