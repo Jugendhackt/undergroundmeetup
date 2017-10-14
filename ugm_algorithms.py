@@ -90,7 +90,7 @@ def findMeetPoint(data, positions):
                     vertices[psn] = []
                 else:
                     # remove the node from the unknown set "Q"
-                    vertices[psn][vertices[psn] != current_vertex]
+                    vertices[psn] = vertices[psn][vertices[psn] != current_vertex]
 
                 knownPoints[psn] = np.append(knownPoints[psn], current_vertex)
 
