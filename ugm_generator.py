@@ -1,4 +1,4 @@
-# This script converts data.station.csv and data.lines.csv to 
+# This script converts data.station.csv and data.lines.csv to
 # matrix graph like data.generated.csv data format.
 
 ##### DO NOT EDIT data.generated.csv #####
@@ -52,7 +52,7 @@ for line in file_lines:
 
 header_line = ""
 
-for station in stations: 
+for station in stations:
     header_line += station_string(station) + ";"
 
 # Remove last simicolon from header line
