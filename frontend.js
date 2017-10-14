@@ -68,11 +68,13 @@ function showMeeting() {
         alert("Error: " + result.error);
       } else {
         var form = document.getElementById("form");
+        var linkBox = document.getElementById("links");
         var resultDiv = document.getElementById('result');
         if(resultDiv === null) {
           resultDiv = document.createElement('div');
           resultDiv.id = "result";
-          form.appendChild(resultDiv);
+          resultDiv.classList.add("text");
+          form.insertBefore(resultDiv, linkBox);
         }
         resultDiv.innerHTML = "Your Meeting Point is <strong>" + result.meetup + "</strong>";
       }
