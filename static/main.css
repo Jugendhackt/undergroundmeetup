@@ -54,15 +54,11 @@ select, button {
   background-color: lightgray;
 }
 
-#resultcon {
+#result {
   font-size: 1.2rem;
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: center;
-}
-
-#result {
-  font-weight: bold;
 }
 
 .two-buttons {
