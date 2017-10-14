@@ -1,5 +1,7 @@
 import numpy as np
 
+#All Matricies are expected to be comlumn majour
+
 #############
 # CONSTANTS #
 #############
@@ -52,8 +54,6 @@ def dijkstra(data, P1, P2):
 # where data is the relationship matrix (numpy matrix) and 
 # P1/P2 are the indices of the stations in the matrix (From Column to Row)
 def findMeetPoint(data, positions):
-    #Suffix _P: P1 -> P2
-    #Suffix _M: P2 -> P1
     data = np.array(data);
     vertices = [np.array(range(0, data.shape[0]))] * len(positions);
     knownPoints = [[]] * len(positions);
@@ -68,7 +68,6 @@ def findMeetPoint(data, positions):
 
     while (len(min(vertices, key=lambda x: len(x))) > 0): #The algorithm will terminate eventually
         for psn in range(0, len(positions)):
-            #NOT WORKING
             min_dist = min([v for k,v in np.ndenumerate(dist[psn]) if k in vertices[psn]]);
             current_vertices = [v for (k,v) in np.ndenumerate(vertices[psn]) if dist[psn][v] == min_dist];
             #current_vertices <- all vertices for [psn] with min dist[psn][i]
@@ -80,7 +79,9 @@ def findMeetPoint(data, positions):
                 neighbors = [key for key in range(0, data.shape[0]) 
                                     if key!=current_vertex and data[:, current_vertex][key]!=-1]
                 for neighbor in neighbors:
-                    alt = dist[psn][current_vertex] + data[current_vertex, neighbor];
+                    cur_dist = dist[psn][current_vertex];
+                    neighbor_distance = data[current_vertex, neighbor];
+                    alt = cur_dist + neighbor_distance;
                     if (alt < dist[psn][neighbor]): #If new route is better, change it
                         dist[psn][neighbor] = alt;
                         prev[psn][neighbor] = current_vertex;
