@@ -2,12 +2,6 @@ body {
   font-family: sans-serif;
   margin: 0;
   padding: 0;
-/*  background-image: url(/static/background.jpg);
-  background-color: #666;
-  background-size: 100% auto;
-  background-repeat: no-repeat;
-  copyright notice !!!
-*/
 }
 
 main {
@@ -54,7 +48,7 @@ select, button {
   background-color: lightgray;
 }
 
-#result {
+.text {
   font-size: 1.2rem;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -70,4 +64,8 @@ select, button {
   width: auto;
   margin: 0;
   flex-grow: 2;
+}
+
+a:link, a:visited {
+  color: blue;
 }
