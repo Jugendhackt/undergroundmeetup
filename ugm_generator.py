@@ -15,55 +15,64 @@ class StationRelation:
 stations = []
 relations = []
 
+def station_string(station):
+    return station[0] + ("0" if station[1] < 10 else "") + str(station[1])
+
 file_lines = open('tokyo-metro-data/lines.csv')
 for line in file_lines:
-    prefix  = line.split(';')[0]
-    start   = int(line.split(';')[1])
-    end     = int(line.split(';')[2])
-    times    = line.split(';')[3:]
-    for i in range(start, end):
-        stations.append(prefix + ("0" if i < 10 else "") + str(i))
-        relations.append(StationRelation(prefix + ("0" if i < 10 else "") + str(i), 
-                                         prefix + ("0" if i < 10 else "") + str(i), 
-                                         0)) #0 for itself
-        if (i != start):
+    line = line.split(';')
+    prefix  = line[0]
+    start   = int(line[1])
+    end     = int(line[2])
+    times    = line[3:]
+    for i in range(start, end + 1):
+        stations.append((prefix, i))
+
+        relations.append(StationRelation((prefix, i),
+                     (prefix, i),
+                     0))  # 0 for itself
+
+        if i != start:
             relations.append(StationRelation(
-                             prefix + ("0" if i-1 < 10 else "") + str(i-1),
-                             prefix + ("0" if i+0 < 10 else "") + str(i+0),
-                             int(times[i - start])))
+                             (prefix, i-1),
+                             (prefix, i+0),
+                             int(times[i - 1 - start])))
 
 file_lines = open('tokyo-metro-data/transitions.csv')
 for line in file_lines:
-    prefix1  = line.split(';')[0]
-    prefix2  = line.split(';')[2]
-    number1  = line.split(';')[1]
-    number2  = line.split(';')[3]
-    time     = line.split(';')[4]
-    relations.append(StationRelation(str(prefix1) + str(number1),str(prefix2) + str(number2), int(time)))
+    line = line.split(';')
+    prefix1  = line[0]
+    number1  = int(line[1])
+    prefix2  = line[2]
+    number2  = int(line[3])
+    time     = int(line[4])
+    relations.append(StationRelation((prefix1, number1), (prefix2, number2), time))
 
 header_line = ""
 
 for station in stations: 
-    header_line += station + ";"
+    header_line += station_string(station) + ";"
 
 # Remove last simicolon from header line
 header_line = header_line[:-1]
 
 # Generate staion_size x station_size filled with -1's
-matrix = np.ones(shape=(len(header_line), len(header_line))) * -1;
+matrix = np.ones(shape=(len(stations), len(stations))) * -1;
 
 # Replace all relations in matix
 for relation in relations:
-    matrix[stations.index(relation.stationOne)][stations.index(relation.stationTwo)] = relation.stationTime;
-    matrix[stations.index(relation.stationTwo)][stations.index(relation.stationOne)] = relation.stationTime;
+    one_index = stations.index(relation.stationOne)
+    two_index = stations.index(relation.stationTwo)
+    matrix[one_index][two_index] = relation.stationTime;
+    matrix[two_index][one_index] = relation.stationTime;
 
 # Write the matrix in csv format
 output = open('data.generated.csv', "w+")
 output.writelines(header_line)
 output.write('\n')
-for column in range(0, len(header_line) - 1):
-    for row in range(0, len(header_line) - 1):
+for column in range(0, len(stations)):
+    for row in range(0, len(stations)):
         output.write(str(matrix[column][row]))
-        output.write(';' if row != len(header_line) else '')
+        output.write(';' if row != len(stations) - 1 else '')
     output.write('\n')
 print("Done!")

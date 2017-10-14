@@ -77,7 +77,7 @@ def findMeetPoint(data, positions):
             prev[psn][vertex] = UNDEFINED
         dist[psn][positions[psn]] = 0
 
-    while (len(min(vertices, key=lambda x: len(x))) > 0):
+    while len(min(vertices, key=lambda x: len(x))) > 0:
         for psn in range(0, len(positions)):
             min_dist = min([v for k, v in np.ndenumerate(dist[psn])
                             if k in vertices[psn]])
