@@ -7,11 +7,13 @@ api_prefix = "/api/v1"
 
 metro_data = load_metro_data('data.csv')
 
+
 @app.route("/")
 def index():
     return render_template("index.html",
-            stylesheet=url_for('static', filename='main.css'),
-            script=url_for('static', filename='main.js'))
+                           stylesheet=url_for('static', filename='main.css'),
+                           script=url_for('static', filename='main.js'))
+
 
 @app.route(api_prefix + "/meetup", methods=['POST'])
 def meetup():
