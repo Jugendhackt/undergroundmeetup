@@ -1,0 +1,3 @@
+[submodule "tokyo-metro-data"]
+	path = tokyo-metro-data
+	url = https://bitbucket.org/undergroundmeetup/tokyo-metro-data.git
