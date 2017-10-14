@@ -14,7 +14,7 @@ def get_station_index(metro_data, station):
 def findNamedMeetPoint(metro_data, positions):
     stations = [x for x in map(lambda x: get_station_index(metro_data, x),
                                positions)]
-    meetpoint = int(findMeetPoint(metro_data["metro_data"], stations))
+    meetpoint = findMeetPoint(metro_data["metro_data"], stations)
     return get_station_name(metro_data, meetpoint)
 
 
