@@ -87,3 +87,17 @@ select, button {
 a:link, a:visited {
   color: blue;
 }
+
+#routes h2 {
+  font-size: 1.2rem;
+}
+
+#routes ul {
+  text-align: left;
+  list-style: none;
+  padding: 0;
+}
+
+#routes li {
+  margin-bottom: 10px;
+}
