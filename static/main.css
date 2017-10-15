@@ -55,7 +55,7 @@ select, button {
   text-align: center;
 }
 
-.two-buttons {
+/*.two-buttons {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -64,6 +64,24 @@ select, button {
   width: auto;
   margin: 0;
   flex-grow: 2;
+}
+*/
+
+.two-buttons {
+  width: 100%;
+}
+
+.two-buttons button {
+  width: 50%;
+}
+
+.two-buttons :nth-child(1) {
+  float: left;
+  border-right: 1px solid black;
+}
+
+.two-buttons :nth-child(2) {
+  border-left: 1px solid black;
 }
 
 a:link, a:visited {
