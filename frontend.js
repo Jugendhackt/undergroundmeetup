@@ -76,7 +76,17 @@ function showMeeting() {
           resultDiv.classList.add("text");
           form.insertBefore(resultDiv, linkBox);
         }
-        resultDiv.innerHTML = "Your Meeting Point is <strong>" + result.meetup + "</strong>";
+
+        var routes = ""
+        for(var i = 0; i < stations.length; i++) {
+          var route = result.routes[stations[i]]
+          route[0] = `<em>${route[0]}</em>`;
+          route[route.length - 1] = `<strong>${route[route.length - 1]}</strong>`;
+          routes += `<li>${route.reverse().join(" &larr; ")}</li>`;
+        }
+
+        resultDiv.innerHTML = "<p>Your Meeting Point is <strong>" + result.meetup + "</strong></p>"
+          + "<div id=\"routes\"><h2>Routes</h2><ul>" + routes + "</ul></div>";
       }
     });
   }
