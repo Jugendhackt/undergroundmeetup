@@ -3,6 +3,7 @@ Description=ugm_web
 After=network.target
 
 [Service]
+WorkingDirectory=/home/ugm/ugm
 ExecStart=/usr/bin/python /home/ugm/ugm/ugm_web.py
 User=ugm
 Group=users
